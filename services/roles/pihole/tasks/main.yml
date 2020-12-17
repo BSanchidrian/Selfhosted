@@ -1,0 +1,18 @@
+---
+- name: Start PiHole
+  docker_container:
+    name: pihole
+    image: pihole/pihole:latest
+    ports: "{{ services.pihole.ports }}"
+    env:
+      TZ: ${TZ}
+      WEBPASSWORD: Ciudadela
+    volumes:
+      - "${USERDIR}/etc-pihole/:/etc/pihole/"
+      - "${USERDIR}/etc-dnsmasq.d/:/etc/dnsmasq.d/"
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
