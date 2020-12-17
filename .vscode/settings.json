@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.yml": "ansible"
+  },
+  "workbench.iconTheme": "vscode-icons"
+}

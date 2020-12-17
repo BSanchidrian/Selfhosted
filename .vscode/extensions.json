@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "eamodio.gitlens",
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+    "znck.grammarly",
+    "vscode-icons-team.vscode-icons",
+    "vscoss.vscode-ansible"
+  ]
+}

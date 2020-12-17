@@ -1,0 +1,6 @@
+# Idea from: https://github.com/progmaticltd/homebox/blob/dev/config/system-example.yml
+
+---
+users:
+  borja:
+    name: Borja Sanchidrian

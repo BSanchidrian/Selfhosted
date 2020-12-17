@@ -1,0 +1,13 @@
+[local]
+localhost
+
+[local:vars]
+ansible_port=2222
+ansible_user=root
+ansible_ssh_pass=root
+
+[homeserver]
+192.168.0.166
+
+[homeserver:vars]
+ansible_user=root
