@@ -1,0 +1,31 @@
+---
+docker_pihole_container_name: pihole
+docker_pihole_image_name: pihole/pihole:latest
+
+docker_pihole_admin_password:
+
+docker_pihole_host_dir_dnsmasqd: "{{ system.base_path }}/pihole/dnsmasq.d/"
+docker_pihole_host_dir_pihole: "{{ system.base_path }}/pihole/"
+docker_pihole_volumes:
+  - "{{ docker_pihole_host_dir_pihole }}:/etc/pihole/"
+  - "{{ docker_pihole_host_dir_dnsmasqd }}:/etc/dnsmasq.d/"
+
+docker_pihole_ports:
+  - 53:53/tcp
+  - 53:53/udp
+  - 67:67/udp
+  - 8000:80/tcp
+  - 4443:443/tcp
+
+docker_pihole_dns_custom_hosts: []
+#  - name: somehost
+#    ip: 192.168.1.123
+#    aliases:
+#      - beer
+#      - pizza
+
+docker_pihole_dns_custom_hosts_path: "{{ docker_pihole_host_dir_pihole }}custom_hosts.list"
+docker_pihole_dns_custom_hosts_dnsmasq_conf_path: "{{ docker_pihole_host_dir_dnsmasqd }}99-custom-hosts.conf"
+docker_pihole_dns_servers:
+  - "127.0.0.1"
+  - "1.1.1.1"

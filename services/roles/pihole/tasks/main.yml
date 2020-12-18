@@ -1,18 +1,23 @@
 ---
-- name: Start PiHole
+- name: "Set the __docker_pihole_admin_password fact"
+  set_fact:
+    __docker_pihole_random_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
+    __docker_pihole_admin_password: "{{ docker_pihole_admin_password | default(__docker_pihole_random_password) }}"
+
+- name: "Setup the pi-hole docker container"
   docker_container:
-    name: pihole
-    image: pihole/pihole:latest
-    ports: "{{ services.pihole.ports }}"
+    name: "{{ docker_pihole_container_name }}"
+    image: "{{ docker_pihole_image_name }}"
+    state: started
+    restart_policy: unless-stopped
+    volumes: "{{ docker_pihole_volumes }}"
+    ports: "{{ docker_pihole_ports }}"
     env:
-      TZ: ${TZ}
-      WEBPASSWORD: Ciudadela
-    volumes:
-      - "${USERDIR}/etc-pihole/:/etc/pihole/"
-      - "${USERDIR}/etc-dnsmasq.d/:/etc/dnsmasq.d/"
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    cap_add:
-      - NET_ADMIN
-    restart: unless-stopped
+      TZ: "{{ system.timezone }}"
+      WEBPASSWORD: "{{ __docker_pihole_admin_password }}"
+    capabilities: NET_ADMIN
+    dns_servers: "{{ docker_pihole_dns_servers }}"
+
+- name: Setup custom hosts
+  include_tasks: custom_hosts.yml
+  when: docker_pihole_dns_custom_hosts | length > 0
