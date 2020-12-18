@@ -1,0 +1,41 @@
+---
+- name: Create nginx proxy manager docker network
+  docker_network:
+    name: nginx_proxy_manager_network
+
+- name: Setup the nginx proxy manager database docker container
+  docker_container:
+    name: "{{ docker_nginx_proxy_db_container_name }}"
+    image: "{{ docker_nginx_proxy_db_container_image }}"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: nginx_proxy_manager_network
+    env:
+      MYSQL_ROOT_PASSWORD: "{{docker_nginx_proxy_db.root_password}}"
+      MYSQL_DATABASE: "{{docker_nginx_proxy_db.database}}"
+      MYSQL_USER: "{{docker_nginx_proxy_db.user}}"
+      MYSQL_PASSWORD: "{{docker_nginx_proxy_db.password}}"
+    volumes: "{{ docker_nginx_proxy_db_volumes }}"
+
+- name: Setup the nginx proxy manager docker container
+  docker_container:
+    name: "{{ docker_nginx_proxy_container_name }}"
+    image: "{{ docker_nginx_proxy_container_image }}"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: nginx_proxy_manager_network
+    env:
+      DB_MYSQL_HOST: "{{docker_nginx_proxy_db_container_name}}"
+      DB_MYSQL_PORT: "3306"
+      DB_MYSQL_USER: "{{docker_nginx_proxy_db.user}}"
+      DB_MYSQL_PASSWORD: "{{docker_nginx_proxy_db.password}}"
+      DB_MYSQL_NAME: "{{docker_nginx_proxy_db.database}}"
+    volumes: "{{ docker_nginx_proxy_volumes }}"
+    ports: "{{ docker_nginx_proxy_ports }}"
+
+- name: Allow https traffic in UFW
+  ufw:
+    rule: allow
+    port: 443

@@ -6,5 +6,5 @@ users:
     name: Borja Sanchidrian
 
 system:
-  base_path: "/etc/homeserver/"
+  base_path: "/etc/homeserver"
   timezone: "Europe/Madrid"

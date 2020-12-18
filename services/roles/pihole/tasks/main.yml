@@ -1,10 +1,10 @@
 ---
-- name: "Set the __docker_pihole_admin_password fact"
+- name: Set the __docker_pihole_admin_password fact
   set_fact:
     __docker_pihole_random_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits') }}"
     __docker_pihole_admin_password: "{{ docker_pihole_admin_password | default(__docker_pihole_random_password) }}"
 
-- name: "Setup the pi-hole docker container"
+- name: Setup the pi-hole docker container
   docker_container:
     name: "{{ docker_pihole_container_name }}"
     image: "{{ docker_pihole_image_name }}"

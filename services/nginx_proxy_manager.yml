@@ -1,0 +1,6 @@
+---
+- hosts: all
+  vars_files:
+    - "{{ playbook_dir }}/../config/system.yml"
+  roles:
+    - nginx_proxy_manager

@@ -1,0 +1,28 @@
+---
+docker_nginx_proxy_container_name: nginx_proxy_manager
+docker_nginx_proxy_container_image: jc21/nginx-proxy-manager:latest
+
+docker_nginx_proxy_db_container_name: nginx_proxy_manager_db
+docker_nginx_proxy_db_container_image: jc21/mariadb-aria:10.4
+
+docker_nginx_proxy_db:
+  root_password: "npm"
+  database: "npm"
+  user: "npm"
+  password: "defaultpassword"
+
+docker_nginx_proxy_base_path: "{{ system.base_path }}/nginx_proxy_manager/"
+docker_nginx_proxy_volumes:
+  - "{{ docker_nginx_proxy_base_path }}/data:/data"
+  - "{{ docker_nginx_proxy_base_path }}/letsencrypt:/etc/letsencrypt"
+
+docker_nginx_proxy_db_volumes:
+  - "{{ docker_nginx_proxy_base_path }}/data/mysql:/var/lib/mysql"
+
+docker_nginx_proxy_ports:
+  - 80:80/tcp
+  - 81:81/tcp
+  # Do not change
+  - 443:443/tcp
+
+docker_nginx_proxy_db_sqlite_file: "{{docker_nginx_proxy_base_path}}database.sqlite"
