@@ -1,6 +1,0 @@
----
-- name: Start nginx
-  systemd:
-    name: nginx
-    state: started
-    no_block: true

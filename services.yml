@@ -1,4 +1,4 @@
 ---
 - import_playbook: services/sudo.yml
 - import_playbook: services/docker.yml
-- import_playbook: services/nginx.yml
+- import_playbook: services/pihole.yml
