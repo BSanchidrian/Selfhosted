@@ -1,0 +1,8 @@
+---
+docker_cloudflare_container_name: cloudflare_ddns
+docker_cloudflare_container_image: oznu/cloudflare-ddns
+
+docker_cloudflare_api_key: yourapikey
+docker_cloudflare_zone: yourdomain.com
+docker_cloudflare_subdomain: ddns
+docker_cloudflare_proxied: "true"

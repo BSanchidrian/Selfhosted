@@ -3,4 +3,5 @@
 - import_playbook: services/ufw.yml
 - import_playbook: services/docker.yml
 - import_playbook: services/pihole.yml
+- import_playbook: services/cloudflare_ddns.yml
 - import_playbook: services/nginx_proxy_manager.yml

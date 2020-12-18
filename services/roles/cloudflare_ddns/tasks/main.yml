@@ -1,0 +1,12 @@
+---
+- name: Setup the nginx proxy manager docker container
+  docker_container:
+    name: "{{ docker_cloudflare_container_name }}"
+    image: "{{ docker_cloudflare_container_image }}"
+    state: started
+    restart_policy: unless-stopped
+    env:
+      API_KEY: "{{docker_cloudflare_api_key}}"
+      ZONE: "{{docker_cloudflare_zone}}"
+      SUBDOMAIN: "{{docker_cloudflare_subdomain}}"
+      PROXIED: "{{docker_cloudflare_proxied}}"
